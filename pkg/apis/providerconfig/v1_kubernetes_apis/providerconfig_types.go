@@ -9,6 +9,7 @@ import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+// (-- LINT.IfChange --)
 type ProviderConfig struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -79,6 +80,7 @@ type ProviderConfigSpec struct {
 	//
 	// +kubebuilder:validation:MinLength=1
 	// +kubebuilder:validation:MaxLength=30
+	// +kubebuilder:validation:Pattern=`^[a-z][a-z0-9-]{4,28}[a-z0-9]$`
 	// +(Validation done in accordance with https://cloud.google.com/resource-manager/docs/creating-managing-projects#before_you_begin)
 	ProjectID string `json:"projectID"`
 	// PSC connection ID of the PSC endpoint.
@@ -131,3 +133,5 @@ type PrincipalInfo struct {
 	// +kubebuilder:validation:Optional
 	Name string `json:"name,omitempty"`
 }
+
+// (-- LINT.ThenChange(//depot/google3/cloud/kubernetes/tenancy/apis/providerconfig/v1/providerconfig_types.go) --)
